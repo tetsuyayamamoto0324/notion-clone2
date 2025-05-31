@@ -5,6 +5,7 @@ import { useNoteStore } from "@/modules/notes/note.state";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
+
 const NoteDetail = () => {
   const params = useParams();
   const id= parseInt(params.id!);
@@ -47,6 +48,7 @@ const NoteDetail = () => {
           initialData={note}
           onTitleChange={(title) => updateNote(id, { title })}
         />
+        <Editor />
       </div>
     </div>
   );
