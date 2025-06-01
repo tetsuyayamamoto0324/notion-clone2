@@ -29,6 +29,17 @@ export const noteRepository = {
         : await query.is("parent_document", null);
     return data;
   },
+
+  async findByKeyword(userId: string, keyword: string) {
+    const { data } = await supabase
+      .from("notes")
+      .select()
+      .eq("user_id", userId)
+      .or(`title.ilike.%${keyword}%,content.ilike.%${keyword}%`)
+      .order("created_at", { ascending: false });
+    return data;
+  },
+
   async findOne(userId: string, id: number) {
     const { data } = await supabase
       .from("notes")
@@ -40,11 +51,11 @@ export const noteRepository = {
   },
   async update(id: number, note: { title?: string; content?: string }) {
     const { data } = await supabase
-    .from('notes')
-    .update(note)
-    .eq('id', id)
-    .select()
-    .single();
-  return data;
+      .from("notes")
+      .update(note)
+      .eq("id", id)
+      .select()
+      .single();
+    return data;
   },
 };
